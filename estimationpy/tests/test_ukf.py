@@ -451,7 +451,7 @@ class Test(unittest.TestCase):
 
         # Convert the results to numpy array
         time = time - time[0]
-        time = np.array(map(lambda x: x.total_seconds(), time))
+        time = np.array([x.total_seconds() for x in time])
         x = np.array(x)
         y = np.array(y)
         sqrtP = np.array(sqrtP)
@@ -528,7 +528,7 @@ class Test(unittest.TestCase):
 
         # Convert the results to numpy array
         time = time - time[0]
-        time = np.array(map(lambda x: x.total_seconds(), time))
+        time = np.array([x.total_seconds() for x in time])
         x = np.array(x)
         y = np.array(y)
         sqrtP = np.array(sqrtP)

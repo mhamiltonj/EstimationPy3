@@ -18,17 +18,17 @@ def main():
     m = Model.Model(filePath, atol=1e-4, rtol=1e-4)
     
     # Show details of the model
-    print m
+    print(m)
     
     # Path of the csv file containing the data series
     # csvPath = "../../../modelica/FmuExamples/Resources/data/DataPumpShort.csv"
     csvPath = "../../../modelica/FmuExamples/Resources/data/DataPump_16to19_Oct2012.csv"
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.GetInputNames(), "\n"
+    print("The names of the FMU inputs are: ", m.GetInputNames(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.GetOutputNames(), "\n"
+    print("The names of the FMU outputs are:", m.GetOutputNames(), "\n")
     
     # Set the CSV file associated to the input, and its covariance
     input = m.GetInputByName("Nrpm")

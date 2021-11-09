@@ -948,7 +948,7 @@ class Model:
                 try:
                     return self.fmu.get_model_variables()[name]
                 except Exception:
-                    logger.error("The variable or parameter: {0} is not available in the list: {1}".format(name, self.fmu.get_model_variables().keys()))
+                    logger.error("The variable or parameter: {0} is not available in the list: {1}".format(name, list(self.fmu.get_model_variables().keys())))
                     return None
             else:
                 logger.error("The FMU model has not yet been set. Impossible return the variable {0}".format(name))
@@ -1358,7 +1358,7 @@ class Model:
 
         dictVariables = self.fmu.get_model_variables(include_alias = False, variability = variability, causality = causality)
             
-        for k in dictVariables.keys():
+        for k in list(dictVariables.keys()):
             # The object attached to each leaf of the tree is << dictParameter[k] >>
             # which is of type << pyfmi.fmi.ScalarVariable >>
             
@@ -1673,7 +1673,7 @@ class Model:
             except ValueError:
                 logger.debug("Simulation of the model from {0} to {1} failed, try again".format(start_time_sec, final_time_sec))
                 i += 1
-            except Exception, e:
+            except Exception as e:
                 logger.warn("Exception during simulation: {0}".format(str(e)))
                 logger.warn("Simulation of the model failed between {0} and {1}, try again".format(start_time, final_time))
                 i += 1 

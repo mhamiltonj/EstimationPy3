@@ -25,10 +25,10 @@ def main():
     
     # Define the path of the FMU file
     if platform.architecture()[0]=="32bit":
-        print "32-bit architecture"
+        print("32-bit architecture")
         filePath = os.path.join(dir_path, "..", "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder.fmu")
     else:
-        print "64-bit architecture"
+        print("64-bit architecture")
         filePath = os.path.join(dir_path, "..", "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder_64bit.fmu")
         
     # Initialize the FMU model empty
@@ -61,7 +61,7 @@ def main():
     var.set_constraint_low(True)
     
     # show the info about the variable to be estimated
-    print var.info()
+    print(var.info())
     
     # Set parameters been identified
     par_a = m.get_variable_object("a")

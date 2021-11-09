@@ -1071,14 +1071,14 @@ class UkfFmu:
 
             # Print progress
             current_ts = calendar.timegm(t.timetuple())
-            print '[UKF] Step {0}, time = {1} s ({2:.1f}%)'.format(i, current_ts,
+            print('[UKF] Step {0}, time = {1} s ({2:.1f}%)'.format(i, current_ts,
                                                                    100 * float(current_ts-start_ts)
-                                                                   /float(final_ts-start_ts))
+                                                                   /float(final_ts-start_ts)))
 
             # Execute a filtering step
             try:
                 X_corr, sP, Zave, S_y, Zfull_ave, X_full = self.ukf_step(x[i-1-ix_start], sqrt_Ps[i-1-ix_start], sqrt_Q, sqrt_R, t_old, t, z)
-            except Exception, e:
+            except Exception as e:
                 logger.exception("Exception while running UKF step from {0} to {1}".format(t_old, t))
                 logger.exception(str(e))
                 logger.exception("The state is X = {0}".format(x[i-1-ix_start]))
@@ -1155,7 +1155,7 @@ class UkfFmu:
         # thus the difference between these two states is back-propagated to the state at time i
         for i in range(nTimeStep-2,-1,-1):
 
-            print "[UKF] Smoothing step {}".format(i)
+            print("[UKF] Smoothing step {}".format(i))
 
             # reset the full state of the model
             self.model.set_state(x_full[i])

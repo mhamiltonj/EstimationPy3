@@ -18,13 +18,13 @@ def main():
     m.ReInit(filePath, atol=1e-5, rtol=1e-6)
     
     # Show details
-    print m
+    print(m)
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.GetInputNames(), "\n"
+    print("The names of the FMU inputs are: ", m.GetInputNames(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.GetOutputNames(), "\n"
+    print("The names of the FMU outputs are:", m.GetOutputNames(), "\n")
     
     # Set the CSV file associated to the input
     inputPath = "../../../modelica/FmuExamples/Resources/data/SimulationData_HeatExchanger.csv"

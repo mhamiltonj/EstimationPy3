@@ -30,14 +30,14 @@ NoiseDataMatrix = DataMatrix.copy()
 NoiseDataMatrix[:,1] = NoiseDataMatrix[:,1] + noise_u
 NoiseDataMatrix[:,2] = NoiseDataMatrix[:,2] + noise_y2
 NoiseDataMatrix[:,3] = NoiseDataMatrix[:,3] + noise_y1
-print "\nComputed the noise to add..."
+print("\nComputed the noise to add...")
 
 # write data to CSV file
 for i in range(I):
 	csv_writer.writerow(NoiseDataMatrix[i,:])
-print "Noise added"
+print("Noise added")
 
-print "\nPlotting..."
+print("\nPlotting...")
 # plot the figures that show the difference between the simulation data
 # and the data corrupted by noise
 fig = plt.figure()

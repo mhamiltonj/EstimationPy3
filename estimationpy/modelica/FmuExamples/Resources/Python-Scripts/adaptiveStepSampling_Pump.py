@@ -57,15 +57,15 @@ for row in DataMatrix:
 # Be sure it is a numpy array	
 newDataMatrix = np.array(newDataMatrix)
 
-print "Original form data:",np.shape(DataMatrix)
-print "Modified form data:",np.shape(newDataMatrix)
+print("Original form data:",np.shape(DataMatrix))
+print("Modified form data:",np.shape(newDataMatrix))
 
 # write data to CSV file
 for row in newDataMatrix:
 	csv_writer.writerow(row)
-print "Variable step sampling done..."
+print("Variable step sampling done...")
 
-print "\nPlotting..."
+print("\nPlotting...")
 # plot the figures that show the difference between the simulation data
 # and the data corrupted by noise
 fig = plt.figure()

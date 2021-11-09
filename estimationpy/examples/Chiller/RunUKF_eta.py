@@ -17,23 +17,23 @@ def main():
     # Assign an existing FMU to the model, depending on the platform identified
     dir_path = os.path.dirname(__file__)
     if platform.architecture()[0]=="32bit":
-        print "32-bit architecture"
+        print("32-bit architecture")
         filePath = os.path.join(dir_path, "..", "..","..", "modelica", "FmuExamples", "Resources", "FMUs", "ChillerFDD.fmu")
     else:
-        print "64-bit architecture"
+        print("64-bit architecture")
         filePath = os.path.join(dir_path, "..", "..","..", "modelica", "FmuExamples", "Resources", "FMUs", "ChillerFDD_64bit.fmu")
     
     # Initialize the FMU model empty
     m = Model.Model(filePath)
     
     # Description of the model
-    print m
+    print(m)
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.GetInputNames(), "\n"
+    print("The names of the FMU inputs are: ", m.GetInputNames(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.GetOutputNames(), "\n"
+    print("The names of the FMU outputs are:", m.GetOutputNames(), "\n")
     
     # Path of the csv file containing the data series
     #csvPath = os.path.join(dir_path, "ChillerResults7.csv")

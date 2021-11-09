@@ -27,10 +27,10 @@ def main(n_proc = multiprocessing.cpu_count()-1):
 
     # Define the path of the FMU file
     if platform.architecture()[0]=="32bit":
-        print "32-bit architecture"
+        print("32-bit architecture")
         filePath = os.path.join(dir_path, "..", "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder.fmu")
     else:
-        print "64-bit architecture"
+        print("64-bit architecture")
         filePath = os.path.join(dir_path, "..", "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder_64bit.fmu")
 
     # Assign an existing FMU to the model

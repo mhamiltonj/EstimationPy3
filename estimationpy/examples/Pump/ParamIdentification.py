@@ -113,7 +113,7 @@ def main():
     ukf_FMU.setUKFparams()
     
     pars = ukf_FMU.ParameterEstimation(maxIter = 500)
-    print pars
+    print(pars)
     
     ShowResults(pars)
       

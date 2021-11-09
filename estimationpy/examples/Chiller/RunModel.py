@@ -39,10 +39,10 @@ def main(days = 1):
     # Assign an existing FMU to the model, depending on the platform identified
     dir_path = os.path.dirname(__file__)
     if platform.architecture()[0]=="32bit":
-        print "32-bit architecture"
+        print("32-bit architecture")
         filePath = os.path.join(dir_path, "..", "..","..", "modelica", "FmuExamples", "Resources", "FMUs", "Chiller_dymola2015_etaPL.fmu")
     else:
-        print "64-bit architecture"
+        print("64-bit architecture")
         filePath = os.path.join(dir_path, "..", "..","..", "modelica", "FmuExamples", "Resources", "FMUs", "ChillerSim_64bit.fmu")
     
     # Initialize the FMU model empty
@@ -52,13 +52,13 @@ def main(days = 1):
     m.ReInit(filePath)
     
     # Show details
-    print m
+    print(m)
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.GetInputNames(), "\n"
+    print("The names of the FMU inputs are: ", m.GetInputNames(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.GetOutputNames(), "\n"
+    print("The names of the FMU outputs are:", m.GetOutputNames(), "\n")
     
     # Set the CSV file associated to the input
     inputPath = os.path.join(dir_path, "..", "..","..", "modelica", "FmuExamples", "Resources", "data", "Jun11.csv")
@@ -104,7 +104,7 @@ def main(days = 1):
     #m.SetReal(m.GetVariableObject("eta_PL"), 0.7)
     
     # Show the values of the state variables
-    print "The state vector is:",m.GetState()
+    print("The state vector is:",m.GetState())
     
     ####################################################################################
     # Take the data series from the CSV file and create modified input time series
@@ -236,12 +236,12 @@ def saveResults(time, results, fileName, samplingTime = 60*5, addNoise = False, 
         
         # Check if noise should be added
         if addNoise:
-            if noises.has_key(name):
+            if name in noises:
                 # compute uniform noise and translate it from [0,1] -> [-0.5, 0.5]
                 noise = noises[name]*(np.random.rand(len(sampled_time)) - 0.5)
                 sampled_values += noise
             else:
-                print "Not possible to add noise, the variable:",name,"is not present."
+                print("Not possible to add noise, the variable:",name,"is not present.")
         
         M = np.vstack((M, sampled_values))
         

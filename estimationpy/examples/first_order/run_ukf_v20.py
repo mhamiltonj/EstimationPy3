@@ -58,7 +58,7 @@ def main():
     var.set_constraint_low(True)
     
     # show the info about the variable to be estimated
-    print var.info()
+    print(var.info())
     
     # Set parameters been identified
     par_a = m.get_variable_object("a")

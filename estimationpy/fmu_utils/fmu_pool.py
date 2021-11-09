@@ -98,7 +98,7 @@ class P(Process):
         # Simulate
         try:
             results = self.model.simulate(start_time = self.startTime, final_time = self.stopTime)
-        except Exception, e:
+        except Exception as e:
             logger.error("Problem while running simulation: {0}".format(str(e)))
             results = False
             

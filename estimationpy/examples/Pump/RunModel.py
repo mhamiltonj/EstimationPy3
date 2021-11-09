@@ -21,13 +21,13 @@ def main():
     m.ReInit(filePath)
     
     # Show details
-    print m
+    print(m)
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.GetInputNames(), "\n"
+    print("The names of the FMU inputs are: ", m.GetInputNames(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.GetOutputNames(), "\n"
+    print("The names of the FMU outputs are:", m.GetOutputNames(), "\n")
     
     # Path of the csv file containing the data series
     #csvPath = "../../../modelica/FmuExamples/Resources/data/DataPumpVeryShort.csv"

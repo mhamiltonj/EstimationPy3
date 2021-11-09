@@ -134,13 +134,13 @@ def showResults(time, x, sqrtP, y, Sy, y_full, Xsmooth, Ssmooth, Yfull_smooth, c
     Ss = numpy.array(Ssmooth)
     Ys = numpy.array(Yfull_smooth)
     
-    print "smoothed end",xs[-1,:]
-    print "smoothed start",xs[0,:]
-    print "smoothed average", numpy.average(xs, 0)
+    print("smoothed end",xs[-1,:])
+    print("smoothed start",xs[0,:])
+    print("smoothed average", numpy.average(xs, 0))
     
-    print "filtered end",x[-1,:]
-    print "filtered start",x[0,:]
-    print "filtered average", numpy.average(x, 0)
+    print("filtered end",x[-1,:])
+    print("filtered start",x[0,:])
+    print("filtered average", numpy.average(x, 0))
     
     ####################################################################
     # Display results

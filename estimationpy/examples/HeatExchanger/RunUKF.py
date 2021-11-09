@@ -74,7 +74,7 @@ def main():
     var.SetConstraintLow(True)
     
     # show the info about the variable to be estimated
-    print var.Info()
+    print(var.Info())
     
     #################################################################
     # Select the parameter to be identified
@@ -88,7 +88,7 @@ def main():
     par.SetConstraintLow(True)
     
     # show the info about the parameter to be identified
-    print par.Info()
+    print(par.Info())
     
     # Select the parameter to be identified
     m.AddParameter(m.GetVariableObject("G_cold"))
@@ -101,7 +101,7 @@ def main():
     par.SetConstraintLow(True)
     
     # show the info about the parameter to be identified
-    print par.Info()
+    print(par.Info())
     
     #################################################################
     # Initialize the model for the simulation
@@ -109,16 +109,16 @@ def main():
     #print "State observed:",m.GetStateObservedValues()
     #print "Parameters estimated:",m.GetParametersValues()
     m.InitializeSimulator()
-    print "After initialization: ", m.GetState()
-    print "State observed:",m.GetStateObservedValues()
-    print "Parameters estimated:",m.GetParametersValues()
+    print("After initialization: ", m.GetState())
+    print("State observed:",m.GetStateObservedValues())
+    print("Parameters estimated:",m.GetParametersValues())
     
     #################################################################
     # instantiate the UKF for the FMU
     ukf_FMU = ukfFMU(m, augmented = False)
     
     # Show details
-    print ukf_FMU
+    print(ukf_FMU)
     
     # start filter
     time, x, sqrtP, y, Sy, y_full  = ukf_FMU.filter(0.0, 5.0)

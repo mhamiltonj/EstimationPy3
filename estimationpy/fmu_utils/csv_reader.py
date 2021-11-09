@@ -124,12 +124,12 @@ class CsvReader():
             
             return df
         
-        except IOError, e:
+        except IOError as e:
             msg = "The file {0} does not exist, impossible to open ".format(self.filename)
             logger.error(msg)
             return pd.DataFrame()
         
-        except ValueError, e:
+        except ValueError as e:
             msg = "The file {0} has problem with the time index ".format(self.filename)
             logger.error(msg)
             return pd.DataFrame()
@@ -246,7 +246,7 @@ class CsvReader():
         msg +="* Quoting char: {0}\n".format(self.dialect.quoting)
         msg +="* Line terminator: {0}\n".format(self.dialect.lineterminator)
         logger.debug(msg)
-        print msg
+        print(msg)
         
     def get_data_series(self):
         """

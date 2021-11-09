@@ -29,10 +29,10 @@ class Test(unittest.TestCase):
         
         # Define the path of the FMU file
         if platform.architecture()[0]=="32bit":
-            print "32-bit architecture"
+            print("32-bit architecture")
             self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder.fmu")
         else:
-            print "64-bit architecture"
+            print("64-bit architecture")
             self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder_64bit.fmu")
             
         # Path of the CSV data
@@ -104,7 +104,7 @@ class Test(unittest.TestCase):
         
         # Check list initialized correctly
         self.assertItemsEqual(['u'], m.get_input_names(), "The list of input names is not correct ")
-        print(m.get_output_names())
+        print((m.get_output_names()))
         self.assertItemsEqual(['y','x'], m.get_output_names(), "The list of output names is not correct")
         
         # Check functions counting the list items work correctly
@@ -151,13 +151,13 @@ class Test(unittest.TestCase):
         m.re_init(self.filePath)
     
         # Show details
-        print m
+        print(m)
         
         # Show the inputs
-        print "The names of the FMU inputs are: ", m.get_input_names(), "\n"
+        print("The names of the FMU inputs are: ", m.get_input_names(), "\n")
         
         # Show the outputs
-        print "The names of the FMU outputs are:", m.get_output_names(), "\n"
+        print("The names of the FMU outputs are:", m.get_output_names(), "\n")
     
         # Set the CSV file associated to the input
         inp = m.get_input_by_name("u")

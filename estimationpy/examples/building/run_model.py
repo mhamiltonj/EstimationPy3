@@ -23,23 +23,23 @@ def main():
     
     # Define the path of the FMU file
     if platform.architecture()[0]=="32bit":
-        print "32-bit architecture"
+        print("32-bit architecture")
         filePath = os.path.join(dir_path, "model", "model_se.fmu")
     else:
-        print "64-bit architecture"
+        print("64-bit architecture")
         filePath = os.path.join(dir_path, "model", "model_se.fmu")
     
     # ReInit the model with the new FMU
     m.re_init(filePath)
     
     # Show details
-    print m
+    print(m)
     
     # Show the inputs
-    print "The names of the FMU inputs are: ", m.get_input_names(), "\n"
+    print("The names of the FMU inputs are: ", m.get_input_names(), "\n")
     
     # Show the outputs
-    print "The names of the FMU outputs are:", m.get_output_names(), "\n"
+    print("The names of the FMU outputs are:", m.get_output_names(), "\n")
 
     # Set the parameters of the model
     fixpars = OrderedDict([("bui.hva.cHea", 812249.38954445894), ("bui.hva.cTecRoo", 31682287.202939499),
@@ -60,7 +60,7 @@ def main():
 
     # Set the values for the parameters
     m.get_fmu().reset()
-    m.get_fmu().set(fixpars.keys(),fixpars.values())
+    m.get_fmu().set(list(fixpars.keys()),list(fixpars.values()))
 
     # Set the CSV file associated to the input
     path_monitoring_data = os.path.join(dir_path, "data", "dataset_simulation.csv")

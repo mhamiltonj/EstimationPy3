@@ -6,13 +6,13 @@ def getCSVdata(inputFileName, outputFileName, samplingTime = 0.0):
 	# open the csv file and instantiate the csv reader
 	file_in  = open(inputFileName)
 	csv_reader = csv.reader(file_in)
-	print "Open file: "+str(inputFileName)
+	print("Open file: "+str(inputFileName))
 	
 	# open the csv output file and delete it if already existing
 	# instantiate the csv writer
 	file_out = open(outputFileName,'w')
 	csv_writer = csv.writer(file_out)
-	print "Created file: "+str(outputFileName)
+	print("Created file: "+str(outputFileName))
 	
 	rows = 0
 	N = 0
@@ -38,12 +38,12 @@ def getCSVdata(inputFileName, outputFileName, samplingTime = 0.0):
 		rows += 1
 	
 	I, J = np.shape(DataMatrix)
-	print "Finished reading the input CSV file,"
-	print "it has: "+str(I)+" rows and "+str(J)+" columns"
+	print("Finished reading the input CSV file,")
+	print("it has: "+str(I)+" rows and "+str(J)+" columns")
 	
 	if samplingTime > 0.0:
-		print "Re-sampling of the data obtained with simulation is required"
-		print "Time step is DT = "+str(samplingTime)
+		print("Re-sampling of the data obtained with simulation is required")
+		print("Time step is DT = "+str(samplingTime))
 		
 		time = DataMatrix[:,0]
 		t_start = time[0]
@@ -58,8 +58,8 @@ def getCSVdata(inputFileName, outputFileName, samplingTime = 0.0):
 		for j in range(1,J):
 			interpDataMatrix[:,j] = np.interp(newTime, time, DataMatrix[:,j])
 		
-		print "Finished re-sampling of the data,"
-		print "Now there are: "+str(numSamples)+" rows and "+str(J)+" columns"
+		print("Finished re-sampling of the data,")
+		print("Now there are: "+str(numSamples)+" rows and "+str(J)+" columns")
 		
 		return (interpDataMatrix, numSamples, J, csv_writer)
 	else:
