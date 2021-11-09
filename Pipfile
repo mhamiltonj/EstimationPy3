@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+ipython = "*"
+numpy = "*"
+pandas = "*"
+fmpy = "*"
+pyfmi = {path = "./dependencies/PyFMI-2.8.10-cp39-cp39-win_amd64.whl", sys_platform = "== 'win32'"}
+cython = "*"
+scipy = "*"
+
+[requires]
+python_version = "3.9"

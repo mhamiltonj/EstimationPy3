@@ -68,3 +68,5 @@ Icon?
 ehthumbs.db
 Thumbs.db
 .idea/
+estimationpy.egg-info
+Pipfile.lock
