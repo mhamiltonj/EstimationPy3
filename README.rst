@@ -1,3 +1,5 @@
+This is a Fork of EstimationPy, converted to be compatible with Python3 using `2to3 <https://docs.python.org/3/library/2to3.html>`_ with a few modifiactions to allow it to be installed under pipenv
+
 ============
 EstimationPy
 ============
