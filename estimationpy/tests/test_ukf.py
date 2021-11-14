@@ -1,13 +1,13 @@
-'''
+"""
 Created on Feb 25, 2014
 
 @author: marco
-'''
+"""
 import os
 import unittest
 import platform
-import pytz
-from datetime import datetime
+# import pytz
+# from datetime import datetime
 import numpy as np
 import pandas as pd
 from estimationpy.ukf.ukf_fmu import UkfFmu
@@ -42,13 +42,13 @@ class Test(unittest.TestCase):
         """
         # Define the path of the FMU file
         if platform.architecture()[0] == "32bit":
-            filePath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder.fmu")
+            file_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "FirstOrder.fmu")
         else:
-            filePath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
-                                    "FirstOrder_64bit.fmu")
+            file_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
+                                     "FirstOrder_64bit.fmu")
 
         # Initialize the FMU model empty
-        self.m = Model(filePath)
+        self.m = Model(file_path)
 
         return
 
@@ -59,12 +59,12 @@ class Test(unittest.TestCase):
         """
         # Define the path of the FMU file
         if platform.architecture()[0] == "32bit":
-            filePath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "ValveStuck.fmu")
+            file_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "ValveStuck.fmu")
         else:
-            filePath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "ValveStuck.fmu")
+            file_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs", "ValveStuck.fmu")
 
         # Initialize the FMU model empty
-        self.m = Model(filePath)
+        self.m = Model(file_path)
 
         return
 
@@ -79,21 +79,21 @@ class Test(unittest.TestCase):
         """
         # Path of the csv file containing the data series
         if noisy:
-            csvPath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
-                                   "NoisySimulationData_FirstOrder.csv")
+            csv_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
+                                    "NoisySimulationData_FirstOrder.csv")
         else:
-            csvPath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
-                                   "SimulationData_FirstOrder.csv")
+            csv_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
+                                    "SimulationData_FirstOrder.csv")
 
         # Set the CSV file associated to the input, and its covariance
         input_u = self.m.get_input_by_name("u")
-        input_u.get_csv_reader().open_csv(csvPath)
+        input_u.get_csv_reader().open_csv(csv_path)
         input_u.get_csv_reader().set_selected_column("system.u")
         input_u.set_covariance(2.0)
 
         # Set the CSV file associated to the output, and its covariance
         output = self.m.get_output_by_name("y")
-        output.get_csv_reader().open_csv(csvPath)
+        output.get_csv_reader().open_csv(csv_path)
         output.get_csv_reader().set_selected_column("system.y")
         output.set_measured_output()
         output.set_covariance(2.0)
@@ -106,27 +106,27 @@ class Test(unittest.TestCase):
         valve model from a CSV file.
         """
         # Path of the csv file containing the data series
-        csvPath = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
-                               "NoisyData_ValveStuck.csv")
+        csv_path = os.path.join(dir_path, "..", "modelica", "FmuExamples", "Resources", "data",
+                                "NoisyData_ValveStuck.csv")
 
         # Set the CSV file associated to the input, and its covariance
         input = self.m.get_input_by_name("dp")
-        input.get_csv_reader().open_csv(csvPath)
+        input.get_csv_reader().open_csv(csv_path)
         input.get_csv_reader().set_selected_column("valveStuck.dp")
 
         # Set the CSV file associated to the input, and its covariance
         input = self.m.get_input_by_name("cmd")
-        input.get_csv_reader().open_csv(csvPath)
+        input.get_csv_reader().open_csv(csv_path)
         input.get_csv_reader().set_selected_column("valveStuck.cmd")
 
         # Set the CSV file associated to the input, and its covariance
         input = self.m.get_input_by_name("T_in")
-        input.get_csv_reader().open_csv(csvPath)
+        input.get_csv_reader().open_csv(csv_path)
         input.get_csv_reader().set_selected_column("valveStuck.T_in")
 
         # Set the CSV file associated to the output, and its covariance
         output = self.m.get_output_by_name("m_flow")
-        output.get_csv_reader().open_csv(csvPath)
+        output.get_csv_reader().open_csv(csv_path)
         output.get_csv_reader().set_selected_column("valveStuck.m_flow")
         output.set_measured_output()
         output.set_covariance(0.05)
@@ -339,7 +339,7 @@ class Test(unittest.TestCase):
             i += 1
         S = ukf_FMU.square_root(P)
 
-        np.testing.assert_almost_equal(P, np.dot(S, S.T), 8, \
+        np.testing.assert_almost_equal(P, np.dot(S, S.T), 8,
                                        "Square root computed with basic Cholesky decomposition is not correct")
 
         # ----------------------------------------------------
@@ -347,7 +347,7 @@ class Test(unittest.TestCase):
         sqrtQ = np.linalg.cholesky(Q)
         L = ukf_FMU.compute_S(Xpoints, Xtrue, sqrtQ, w=Weights)
 
-        np.testing.assert_almost_equal(P, np.dot(L.T, L), 8, \
+        np.testing.assert_almost_equal(P, np.dot(L.T, L), 8,
                                        "Square root computed with basic Cholesky update is not correct")
 
         return
@@ -486,7 +486,7 @@ class Test(unittest.TestCase):
         # Make sure that the maximum error is less or equal than 0.5, and it happens at
         # the first time instant t = 0
         self.assertTrue(max_error <= 0.5, "The maximum error in the estimation has to be less than 0.5")
-        self.assertTrue(t_max_error[0][0] == 0.0 and len(t_max_error[0]) == 1, \
+        self.assertTrue(t_max_error[0][0] == 0.0 and len(t_max_error[0]) == 1,
                         "The maximum error is one and it is at t = 0")
 
         # Compute the mean absolute error
@@ -496,9 +496,9 @@ class Test(unittest.TestCase):
         # Compute that the estimation +/- covariance contains the real state
         x_plus_sigma = x[:, 0] + sqrtP[:, 0, 0]
         x_minus_sigma = x[:, 0] - sqrtP[:, 0, 0]
-        self.assertTrue(len(np.where(x_sim < x_minus_sigma)[0]) == 0, \
+        self.assertTrue(len(np.where(x_sim < x_minus_sigma)[0]) == 0,
                         "The state estimation must contain the real state in its boundaries")
-        self.assertTrue(len(np.where(x_sim > x_plus_sigma)[0]) == 0, \
+        self.assertTrue(len(np.where(x_sim > x_plus_sigma)[0]) == 0,
                         "The state estimation must contain the real state in its boundaries")
 
         return
@@ -579,13 +579,13 @@ class Test(unittest.TestCase):
 
         # Compare performances of UKF and Smoother, verify that the smoother improves
         # the estimation
-        self.assertTrue(max_opening_error >= max_opening_error_s, \
+        self.assertTrue(max_opening_error >= max_opening_error_s,
                         "The max error in the estimation of the opening by the smoother is larger than the filter")
-        self.assertTrue(max_lambda_error >= max_lambda_error_s, \
+        self.assertTrue(max_lambda_error >= max_lambda_error_s,
                         "The maxerror in the estimation of the drift coeff. by the smoother is larger than the filter")
-        self.assertTrue(avg_opening_error >= avg_opening_error_s, \
+        self.assertTrue(avg_opening_error >= avg_opening_error_s,
                         "The avg error in the estimation of the opening by the smoother is larger than the filter")
-        self.assertTrue(avg_lambda_error >= avg_lambda_error_s, \
+        self.assertTrue(avg_lambda_error >= avg_lambda_error_s,
                         "The avg error in the estimation of the drift coeff. by the smoother is larger than the filter")
 
         # Verify that some absolute perfomances are guaranteed

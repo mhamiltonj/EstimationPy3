@@ -1,17 +1,16 @@
-'''
+"""
 @author: Marco Bonvini
-'''
+"""
 
 import csv
-import numpy
+import logging
+
 import pandas as pd
 
-from estimationpy.fmu_utils import strings
-
-import logging
 logger = logging.getLogger(__name__)
 
-class CsvReader():
+
+class CsvReader:
     """
     
     This class provides functionalities that can be used to provide input to an
@@ -43,8 +42,8 @@ class CsvReader():
         and UTC referenced.
     
     """
-    
-    def __init__(self, filename = ""):
+
+    def __init__(self, filename=""):
         """
         Constructor for the class :class:`CsvReader`.
         The method initializes the type of dialect used to interpet the CSV file,
@@ -55,19 +54,19 @@ class CsvReader():
            The argument is optinal because it can be specified later.
         
         """
-        
+
         # The default dialect is e
         self.dialect = csv.excel
-        
+
         # file reference
         self.filename = filename
-        
+
         # columns names
         self.columnNames = []
-        
+
         # the identifier of the column selected in the CSV file
         self.columnSelected = None
-    
+
     def __str__(self):
         """
         This method returns a string representation of the
@@ -77,13 +76,13 @@ class CsvReader():
         :rtype: string
         """
         string = "CsvReader Object"
-        string += "\n-File: "+str(self.filename)
+        string += "\n-File: " + str(self.filename)
         string += "\n-Columns Available:"
         for c in self.columnNames:
-            string += "\n\t-"+str(c)
-        string += "\n-Selected: "+str(self.columnSelected)
+            string += "\n\t-" + str(c)
+        string += "\n-Selected: " + str(self.columnSelected)
         return string
-    
+
     def __open_csv__(self, csv_file):
         """
         This private method is used to open a CSV file given a path name specified by the
@@ -110,30 +109,30 @@ class CsvReader():
         # Read the csv file and instantiate the data frame
         try:
             # Load the data frame
-            df = pd.io.parsers.read_csv(self.filename, dialect = self.dialect)
-                
+            df = pd.io.parsers.read_csv(self.filename, dialect=self.dialect)
+
             # Use the first column as index of the data frame
-            df.set_index(df.columns[0], inplace = True, verify_integrity = True)
-            
+            df.set_index(df.columns[0], inplace=True, verify_integrity=True)
+
             # convert the index to a datetime object, assuming the values have been specified
             # using the SI unit for time [s]
             df.index = pd.to_datetime(df.index, unit="s", utc=True)
-            
+
             # Sort values with respect to the index
             df.sort_index(inplace=True)
-            
+
             return df
-        
-        except IOError as e:
+
+        except IOError:
             msg = "The file {0} does not exist, impossible to open ".format(self.filename)
             logger.error(msg)
             return pd.DataFrame()
-        
-        except ValueError as e:
+
+        except ValueError:
             msg = "The file {0} has problem with the time index ".format(self.filename)
             logger.error(msg)
             return pd.DataFrame()
-     
+
     def open_csv(self, filename):
         """
         This method open a CSV file given a path name specified by the
@@ -158,27 +157,27 @@ class CsvReader():
         """
         # Reinitialize all
         self.__init__(filename)
-        
+
         # Open the csv and get the Data frame
         df = self.__open_csv__(filename)
-        
+
         # If the data frame is empty there were problems while loading the file
         if len(df.index) == 0:
             msg = "ERROR:: The csv file {0} is not correct, please check it...".format(filename)
             logger.error(msg)
             return False
-        
+
         # Get the column names and then delete the data frame
         try:
             self.columnNames = df.columns.tolist()
-            del(df)
+            del df
             return True
         except csv.Error:
             msg = "ERROR:: The csv file {0} is not correct, please check it...".format(filename)
             logger.error(msg)
-            del(df)
+            del df
             return False
-    
+
     def get_file_name(self):
         """
         This method returns the filename of the CSV file associated to this object.
@@ -187,7 +186,7 @@ class CsvReader():
         :rtype: string
         """
         return self.filename
-        
+
     def get_column_names(self):
         """
         This method returns a list containing the names of the columns contained in the csv file.
@@ -197,27 +196,28 @@ class CsvReader():
         
         """
         return self.columnNames
-    
-    def set_selected_column(self, columnName):
+
+    def set_selected_column(self, column_name):
         """
         This method allows to specify which of the columns in the CSV file is selected.
         Once a column is selecetd, it's possible to get the corresponding ``pandas.Series``
         with the method :func:`get_data_series` .
         
-        :param str columnName: The name of the column to be selected.
+        :param str column_name: The name of the column to be selected.
         
         :return: True if the name is successfully selected, False otherwise (e.g., if
             the name is not present in the available column names).
         :rtype: bool
         """
-        if columnName in self.get_column_names():
-            self.columnSelected = columnName
+        if column_name in self.get_column_names():
+            self.columnSelected = column_name
             return True
         else:
-            msg = "ERROR:: The column selected {0} is not part of the columns names list {1}".format(columnName, self.columnNames)
+            msg = "ERROR:: The column selected {0} is not part of the columns names list {1}".format(column_name,
+                                                                                                     self.columnNames)
             logger.error(msg)
             return False
-            
+
     def get_selected_column(self):
         """
         This method returns the name of the column selected.
@@ -227,11 +227,11 @@ class CsvReader():
         :rtype: string
         
         """
-        if self.columnSelected != None:
+        if self.columnSelected is not None:
             return self.columnSelected
         else:
             return ""
-            
+
     def print_dialect_information(self):
         """
         This method print the information about the dialect used by the Csv Reader.
@@ -239,15 +239,15 @@ class CsvReader():
         :return: None
         """
         msg = "CsvReader Dialect informations:\n"
-        msg +="* Delimiter: {0}\n".format(self.dialect.delimiter)
-        msg +="* Double quote char: {0}\n".format(self.dialect.doublequote)
-        msg +="* Escape char: {0}\n".format(self.dialect.escapechar)
-        msg +="* Skip initial space: {0}\n".format(self.dialect.skipinitialspace)
-        msg +="* Quoting char: {0}\n".format(self.dialect.quoting)
-        msg +="* Line terminator: {0}\n".format(self.dialect.lineterminator)
+        msg += "* Delimiter: {0}\n".format(self.dialect.delimiter)
+        msg += "* Double quote char: {0}\n".format(self.dialect.doublequote)
+        msg += "* Escape char: {0}\n".format(self.dialect.escapechar)
+        msg += "* Skip initial space: {0}\n".format(self.dialect.skipinitialspace)
+        msg += "* Quoting char: {0}\n".format(self.dialect.quoting)
+        msg += "* Line terminator: {0}\n".format(self.dialect.lineterminator)
         logger.debug(msg)
         print(msg)
-        
+
     def get_data_series(self):
         """
         This method returns a pandas Series object that contains the data 
@@ -266,42 +266,42 @@ class CsvReader():
         
         """
         # initialize with empty pandas data series
-        dataSeries = pd.Series()
-        
+        data_series = pd.Series()
+
         # Check if the file name has been selected
-        if self.filename != None and self.filename != "":
-            
+        if self.filename is not None and self.filename != "":
+
             # Open the csv and get the Data frame
             df = self.__open_csv__(self.filename)
-            
+
             # If the data frame is empty there were problems while loading the file
             if len(df.index) == 0:
                 msg = "ERROR:: The csv file {0} is not correct, please check it...".format(self.filename)
                 logger.error(msg)
-                return dataSeries
-            
+                return data_series
+
             # Check if the column name is set
-            if self.columnSelected != None:
-                
+            if self.columnSelected is not None:
+
                 # Check if the column name is part of the available dictionary
                 if self.columnSelected in self.columnNames:
-                    
+
                     # Read the time and data column from the csv file
-                    dataSeries = df[self.columnSelected]
-                        
-                    return dataSeries  
-                    
+                    data_series = df[self.columnSelected]
+
+                    return data_series
+
                 else:
                     msg = "The column selected must be present in the csv file!"
-                    msg+= "\nColumn selected: {0}".format(self.columnSelected)
-                    msg+= "\nColumns available: {0}".format(self.columnNames)
+                    msg += "\nColumn selected: {0}".format(self.columnSelected)
+                    msg += "\nColumns available: {0}".format(self.columnNames)
                     logger.error(msg)
-                    return dataSeries
+                    return data_series
             else:
                 msg = "Select a column for the csv file!"
                 logger.error(msg)
-                return dataSeries
+                return data_series
         else:
             msg = "Select a file for the CSV before trying to read it!"
             logger.error(msg)
-            return dataSeries
+            return data_series
