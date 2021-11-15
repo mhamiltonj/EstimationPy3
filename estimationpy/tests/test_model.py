@@ -35,9 +35,14 @@ class Test(unittest.TestCase):
             self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
                                          "FirstOrder.fmu")
         else:
-            print("64-bit architecture")
-            self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
-                                         "FirstOrder_64bit.fmu")
+            if platform.architecture()[1][:7].lower() == "windows":
+                print("Windows 64-bit architecture")
+                self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
+                                             "FirstOrder_v20_win64.fmu")
+            else:
+                print("Linux 64-bit architecture")
+                self.filePath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "FMUs",
+                                             "FirstOrder_64bit.fmu")
 
         # Path of the CSV data
         self.csv_inputPath = os.path.join(self.dir_path, "..", "modelica", "FmuExamples", "Resources", "data",

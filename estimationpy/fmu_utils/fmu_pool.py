@@ -25,7 +25,7 @@ class P(Process):
     * ``model``, that is an instance of the class :class:`estimationpy.fmu_utils.model.Model`,
     * ``x0``, the initial state of the model,
     * ``pars``, the parameters to be modified before simulating the model,
-    * ``startTime``, the initial time of the simulation period,
+    * ``start_time``, the initial time of the simulation period,
     * ``stopTime``, the end time of the simulation period,
     * ``result_queue``, a queue of type :class:`multiprocesing.Queue` where all the results of \
       the simulations are stored and can be retrieved after the simulations are terminated,
