@@ -11,6 +11,7 @@ numpy = "*"
 pandas = "*"
 fmpy = "*"
 pyfmi = {path = "./dependencies/PyFMI-2.8.10-cp39-cp39-win_amd64.whl", sys_platform = "== 'win32'"}
+assimulo = {path = "./dependencies/Assimulo-3.2.5-cp39-cp39-win_amd64.whl", sys_platform = "== 'win32'"}
 cython = "*"
 scipy = "*"
 
